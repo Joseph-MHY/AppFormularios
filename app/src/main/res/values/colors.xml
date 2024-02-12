@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="errorColor">#D50C0C</color>
+    <color name="winColor">#1AD121</color>
+    <color name="infoColor">#008EFF</color>
+    <color name="advertenciaColor">#DC870A</color>
 </resources>
