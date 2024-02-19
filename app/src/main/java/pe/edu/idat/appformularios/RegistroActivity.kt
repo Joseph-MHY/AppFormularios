@@ -3,6 +3,7 @@ package pe.edu.idat.appformularios
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -35,6 +36,9 @@ class RegistroActivity : AppCompatActivity(), View.OnClickListener, AdapterView.
             binding.spestadocivil.adapter = adapter;
         }
         binding.spestadocivil.onItemSelectedListener = this;
+        binding.cbdeportes.setOnClickListener(this);
+        binding.cbmusica.setOnClickListener(this);
+        binding.cbotros.setOnClickListener(this);
     }
     override fun onClick(vista: View) {
         if(vista is CheckBox){
@@ -74,16 +78,33 @@ class RegistroActivity : AppCompatActivity(), View.OnClickListener, AdapterView.
             val infoPersona = binding.etnombres.text.toString() + " " +
                     binding.etapellidos.text.toString() + " " +
                     obtenerGeneroSeleccionado() + " " +
-                    listaPreferencias.toArray() + " "+
+                    obtenerPreferencias() + " "+
                     estadoCivil + " " +
                     binding.swnotificacion.isChecked;
             listaPersona.add(infoPersona);
             Appmensaje.enviarMensaje(binding.root,
                 getString(R.string.exitoRegistro),
                 TipoMensaje.SUCCESSFULL);
+            Log.i("MensajeInfo",obtenerPreferencias())
             setControls();
+
         }
     }
+    private fun obtenerPreferencias(): String {
+        if (listaPreferencias.isEmpty()) return "[]"
+
+        val preferecias = StringBuilder()
+        preferecias.append("[")
+        for ((index, pref) in listaPreferencias.withIndex()) {
+            preferecias.append(pref)
+            if (index != listaPreferencias.size - 1) {
+                preferecias.append(" - ")
+            }
+        }
+        preferecias.append("]")
+        return preferecias.toString()
+    }
+
     private fun setControls() {
         listaPreferencias.clear();
         binding.etnombres.setText("");
